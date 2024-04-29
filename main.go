@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -40,5 +41,11 @@ func main() {
 
 		w.Write(resBody)
 	})
-	http.ListenAndServe(":8080", r)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	http.ListenAndServe("0.0.0.0:"+port, r)
 }
